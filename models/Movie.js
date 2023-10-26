@@ -30,7 +30,8 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
 });
-
+//create a text index
+movieSchema.index({ title: "text" });
 const Movie = mongoose.model("Movie", movieSchema);
 
 module.exports = Movie;
