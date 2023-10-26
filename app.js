@@ -5,6 +5,7 @@ require("dotenv").config();
 const port = process.env.PORT || 3000;
 const indexRouter = require("./routes/index");
 const cookieParser = require("cookie-parser");
+const movieRouter = require("./routes/movieRouter");
 
 const app = express();
 const corsOptions = {
@@ -25,6 +26,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/", indexRouter);
+app.use("/movies", movieRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
