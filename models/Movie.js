@@ -1,11 +1,6 @@
 var mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   title: {
     type: String,
     required: true,
@@ -26,13 +21,13 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: {
+  imageLInk: {
     type: String,
     required: true,
   },
   releaseDate: {
     type: Date,
-    default: Date.now(),
+    required: true,
   },
 });
 
