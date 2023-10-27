@@ -1,6 +1,29 @@
 const Ticket = require("../models/Ticket");
 
-exports.createTicket = async function (req, res) {};
+// Create a new ticket
+exports.createTicket = async function (req, res) {
+  // Extract ticket data from the request body
+  const { movieName, runningTime, image, movieDate } = req.body;
+
+  try {
+      // Create a new ticket document using the Ticket model
+      const newTicket = new Ticket({
+          movieName,
+          runningTime,
+          image,
+          movieDate,
+      });
+
+      // Save the new ticket to the database
+      const savedTicket = await newTicket.save();
+
+      // Return the saved ticket as the response
+      res.status(201).json(savedTicket);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+  }
+};
 exports.getTickets = async function (req, res) {
     try {
         const tickets = await Ticket.find();
