@@ -5,7 +5,6 @@ const router = express.Router();
 const Authentication = require("../middleware/auth.js");
 //router.use(Authentication.hasAuth);
 router.get("/", ticketController.getTickets);
-router.get("/code/:ticketCode",ticketController.getTicketByCode)
 router.get("/:ticketId",ticketController.getTicketById)
 router.post("/", ticketController.createTicket);
 router.put("/:ticketId", ticketController.editTicket);
