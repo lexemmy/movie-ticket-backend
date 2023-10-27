@@ -1,11 +1,6 @@
 var mongoose = require("mongoose");
 
 const ticketSchema = new mongoose.Schema({
-  ticketCode: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   movieName: {
     type: String,
     required: true,
