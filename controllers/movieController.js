@@ -1,16 +1,11 @@
 const Movie = require("../models/Movie");
 
 exports.addMovie = async (req, res) => {
-  let {
-    title,
-    description,
-    runningTime,
-    trailerLink,
-    genre,
-    imageLInk,
-    releaseDate,
-  } = req.body;
+  let { title, description, runningTime, trailerLink, genre, releaseDate } =
+    req.body;
+
   try {
+    let imageLInk = req.file.path;
     if (
       title &&
       description &&
@@ -31,7 +26,7 @@ exports.addMovie = async (req, res) => {
         releaseDate,
       });
       await newMovie.save();
-      return res.status(200).json({ message: newMovie });
+      res.status(200).json({ message: newMovie });
     } else {
       return res.status(404).json({ message: "incorrect data input" });
     }
@@ -43,9 +38,10 @@ exports.getMovies = async function (req, res) {
   let title = req.query.title;
   try {
     if (title) {
-      //Todo: fix query by text match
       console.log(await Movie.find({ $text: { $search: title } }));
-      return res.status(200).json();
+      return res
+        .status(200)
+        .json(await Movie.find({ $text: { $search: title } }));
     } else {
       console.log(await Movie.find());
       return res.status(200).json(await Movie.find());
