@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 const indexRouter = require("./routes/index");
 const cookieParser = require("cookie-parser");
 const movieRouter = require("./routes/movieRouter");
+const ticketRouter = require("./routes/ticketRouter");
 
 const app = express();
 const corsOptions = {
@@ -27,6 +28,7 @@ mongoose
 
 app.use("/", indexRouter);
 app.use("/movies", movieRouter);
+app.use("/tickets", ticketRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
