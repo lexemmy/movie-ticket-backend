@@ -7,6 +7,7 @@ const indexRouter = require("./routes/index");
 const cookieParser = require("cookie-parser");
 const movieRouter = require("./routes/movieRouter");
 const ticketRouter = require("./routes/ticketRouter");
+const imageRouter = require("./routes/imageRouter");
 
 const app = express();
 const corsOptions = {
@@ -17,7 +18,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static("public"));
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -30,6 +30,7 @@ mongoose
 app.use("/", indexRouter);
 app.use("/movies", movieRouter);
 app.use("/tickets", ticketRouter);
+app.use("/images", imageRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
