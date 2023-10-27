@@ -53,7 +53,37 @@ exports.getMovies = async function (req, res) {
 exports.getMoviesById = async function (req, res) {
   let id = req.params.id
 }
-exports.editMovie = async function (req, res) {}
+exports.editMovie = async (req, res) => {
+  const movieId = req.params.movieId
+  const { title, description, runningTime, trailerLink, genre, releaseDate } =
+    req.body
+
+  try {
+    let imageLink = req.file.path
+    const movie = await Movie.findByIdAndUpdate(
+      { _id: movieId },
+      {
+        title: title,
+        description: description,
+        runningTime: runningTime,
+        trailerLink: trailerLink,
+        genre: genre,
+        imageLink: imageLink,
+        releaseDate: releaseDate,
+      },
+      { new: true }
+    )
+
+    if (!movie) {
+      return res.status(404).json({ message: 'Movie not found' })
+    }
+
+    res.json(movie)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
 
 exports.deleteMovie = async function (req, res) {
   const movieId = req.params.movieId
