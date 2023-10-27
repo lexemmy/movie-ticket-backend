@@ -28,6 +28,7 @@ exports.createTicket = async function (req, res) {
     res.status(500).json({ message: 'Server error' })
   }
 };
+
 exports.getTickets = async function (req, res) {
   try {
     const tickets = await Ticket.find()
@@ -42,7 +43,7 @@ exports.getTickets = async function (req, res) {
 exports.getTicketById = async (req, res) => {
   const ticketId = req.params.ticketId
   try {
-    const ticket = await Ticket.findById(ticketId)
+    const ticket = await Ticket.findOne({ code: ticketId })
     if (!ticket) {
       return res.status(404).json({ message: 'Ticket not found' })
     }
@@ -72,9 +73,9 @@ exports.getTicketByCode = async (req, res) => {
 
 // Delete a ticket by ID
 exports.deleteTicket = async (req, res) => {
-  const ticketId = req.params.ticketId
+  const ticketCode = req.params.ticketId
   try {
-    const ticket = await Ticket.findByIdAndDelete(ticketId)
+    const ticket = await Ticket.findOneAndDelete({ code: ticketCode });
     if (!ticket) {
       return res.status(404).json({ message: 'Ticket not found' })
     }
@@ -88,15 +89,12 @@ exports.deleteTicket = async (req, res) => {
 // Edit a ticket by ID
 exports.editTicket = async (req, res) => {
   const ticketId = req.params.ticketId
-  const { movieName, runningTime, image, movieDate } = req.body
+  const { movieDate } = req.body
 
   try {
-    const ticket = await Ticket.findByIdAndUpdate(
-      { _id: ticketId },
+    const ticket = await Ticket.findOneAndUpdate(
+      { code: ticketId },
       {
-        movieName: movieName,
-        runningTime: runningTime,
-        image: image,
         movieDate: movieDate,
       },
       { new: true }
