@@ -24,6 +24,7 @@ exports.createTicket = async function (req, res) {
       res.status(500).json({ message: 'Server error' });
   }
 };
+
 exports.getTickets = async function (req, res) {
     try {
         const tickets = await Ticket.find();
