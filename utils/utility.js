@@ -10,6 +10,24 @@ function generateTicketCode() {
   return ticketCode
 }
 
+function getToken(header) {
+  let token = null
+
+  for (let i = 0; i < header.length; i++) {
+    const header = header[i].trim()
+    if (header.startsWith('token=')) {
+      token = header.substring(6)
+      break
+    }
+  }
+
+  return token
+}
+
 module.exports = {
   generateTicketCode,
+}
+
+module.exports = {
+  getToken,
 }

@@ -1,4 +1,5 @@
 const Movie = require('../models/Movie')
+const mongoose = require('mongoose')
 
 exports.addMovie = async (req, res) => {
   let { title, description, runningTime, trailerLink, genre, releaseDate } =
@@ -98,7 +99,11 @@ exports.editMovie = async (req, res) => {
 exports.deleteMovie = async function (req, res) {
   const movieId = req.params.movieId
   try {
-    const movie = await Movie.findByIdAndDelete(movieId)
+    if (!mongoose.Types.ObjectId.isValid(movieId)) {
+      return res.status(400).json({ error: 'Invalid movieId' })
+    }
+
+    const movie = await Movie.findByIdAndDelete({ _id: movieId })
     if (!movie) {
       return res.status(404).json({ message: 'Movie not found' })
     }
