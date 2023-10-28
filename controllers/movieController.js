@@ -50,8 +50,18 @@ exports.getMovies = async function (req, res) {
     return res.status(501).json({ message: err })
   }
 }
-exports.getMoviesById = async function (req, res) {
-  let id = req.params.id
+exports.getMovieById = async (req, res) => {
+  const movieId = req.params.movieId
+  try {
+    const movie = await Movie.findOne({ _id: movieId })
+    if (!movie) {
+      return res.status(404).json({ message: 'movie not found' })
+    }
+    res.json(movie)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error' })
+  }
 }
 exports.editMovie = async (req, res) => {
   const movieId = req.params.movieId
