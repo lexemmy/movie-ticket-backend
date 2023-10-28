@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 exports.hasAuth = (req, res, next) => {
-  const authHeader = req.cookies.token;
-  console.log(authHeader);
+  let authHeader = req.get("authorization");
+  authHeader = authHeader.split("=")[1];
   if (authHeader == null) {
     return res.status(401).json({ error: "Authorization header missing" });
   }
